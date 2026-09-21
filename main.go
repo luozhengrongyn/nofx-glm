@@ -106,10 +106,13 @@ func main() {
 	// Create TraderManager
 	traderManager := manager.NewTraderManager()
 
-	// Load all traders from database to memory (may auto-start traders with IsRunning=true)
+	// Load all traders from database to memory
 	if err := traderManager.LoadTradersFromStore(st); err != nil {
 		logger.Fatalf("❌ Failed to load traders: %v", err)
 	}
+
+	// Auto-restore runtime for traders marked as running in database
+	traderManager.AutoStartRunningTraders(st)
 
 	// Display loaded trader information
 	traders, err := st.Trader().List("default")
