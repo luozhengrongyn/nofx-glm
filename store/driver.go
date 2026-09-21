@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	_ "github.com/lib/pq"      // PostgreSQL driver
-	_ "modernc.org/sqlite"     // SQLite driver
+	_ "github.com/glebarez/go-sqlite" // SQLite driver (pure Go, no CGO)
 )
 
 // DBType represents database type

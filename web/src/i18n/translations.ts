@@ -211,6 +211,8 @@ export const translations = {
     enterCustomAPIURL: 'Enter custom API endpoint URL',
     useOfficialAPI: 'Use official API service',
     useCustomAPI: 'Use custom API endpoint',
+    customProvider: 'Custom Provider',
+    customProviderDesc: 'Define your own AI provider (Ollama, vLLM, custom proxy, etc.)',
 
     // Exchange Configuration
     secretKey: 'Secret Key',
@@ -1442,6 +1444,8 @@ export const translations = {
     enterCustomAPIURL: '请输入自定义API端点地址',
     useOfficialAPI: '使用官方API服务',
     useCustomAPI: '使用自定义API端点',
+    customProvider: '自定义提供商',
+    customProviderDesc: '自定义 AI 提供商（Ollama、vLLM、自建代理等）',
 
     // Exchange Configuration
     secretKey: '密钥',

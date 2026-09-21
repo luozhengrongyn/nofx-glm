@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
-import { Trash2, Brain, ExternalLink } from 'lucide-react'
+import { Trash2, Brain, ExternalLink, PlusCircle } from 'lucide-react'
 import type { AIModel } from '../../types'
 import type { Language } from '../../i18n/translations'
 import { t } from '../../i18n/translations'
@@ -339,6 +339,35 @@ function ModelSelectionStep({
           </div>
         </button>
       )}
+
+      {/* Custom Provider Card */}
+      <button
+        type="button"
+        onClick={() => {
+          // Create a temporary custom provider ID
+          const customId = 'custom:' + Date.now()
+          onSelectModel(customId)
+        }}
+        className="w-full p-5 rounded-xl text-left transition-all hover:scale-[1.01]"
+        style={{
+          background: 'rgba(224, 72, 59, 0.06)',
+          border: '1.5px dashed rgba(224, 72, 59, 0.3)',
+        }}
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(224, 72, 59, 0.12)' }}>
+            <PlusCircle className="w-5 h-5" style={{ color: '#E0483B' }} />
+          </div>
+          <div>
+            <div className="font-bold text-base" style={{ color: '#1A1813' }}>
+              {t('modelConfig.customProvider', language)}
+            </div>
+            <div className="text-xs mt-0.5" style={{ color: '#8A8478' }}>
+              {t('modelConfig.customProviderDesc', language)}
+            </div>
+          </div>
+        </div>
+      </button>
 
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
         {availableModels
@@ -1176,6 +1205,8 @@ function StandardProviderConfigForm({
   onSubmit: (e: React.FormEvent) => void
   language: Language
 }) {
+  const isCustomProvider = selectedModel.id.startsWith('custom:')
+
   return (
     <form onSubmit={onSubmit} className="space-y-5">
       {/* Selected Model Header */}
@@ -1201,12 +1232,14 @@ function StandardProviderConfigForm({
             {getShortName(selectedModel.name)}
           </div>
           <div className="text-xs" style={{ color: '#8A8478' }}>
-            {selectedModel.provider} •{' '}
+            {isCustomProvider
+              ? t('modelConfig.customProvider', language)
+              : selectedModel.provider} •{' '}
             {AI_PROVIDER_CONFIG[selectedModel.provider]?.defaultModel ||
               selectedModel.id}
           </div>
         </div>
-        {AI_PROVIDER_CONFIG[selectedModel.provider] && (
+        {!isCustomProvider && AI_PROVIDER_CONFIG[selectedModel.provider] && (
           <a
             href={AI_PROVIDER_CONFIG[selectedModel.provider].apiUrl}
             target="_blank"
